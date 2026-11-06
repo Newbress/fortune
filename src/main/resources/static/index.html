@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="과거·현재·미래 세 장의 카드로 보는 타로 풀이">
+  <title>별빛 타로</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <h1>별빛 타로</h1>
+      <p class="sub">과거 · 현재 · 미래, 세 장의 카드로 마음을 들여다봐요</p>
+    </header>
+
+    <section id="setup" aria-labelledby="step1">
+      <h2 id="step1" class="step">어떤 이야기를 나눠볼까요?</h2>
+      <div class="categories" role="group" aria-label="카테고리 선택">
+        <button type="button" class="cat" data-category="LOVE" aria-pressed="false"><span class="cat-icon" aria-hidden="true">♥</span>연애</button>
+        <button type="button" class="cat" data-category="CAREER" aria-pressed="false"><span class="cat-icon" aria-hidden="true">♠</span>커리어</button>
+        <button type="button" class="cat" data-category="MONEY" aria-pressed="false"><span class="cat-icon" aria-hidden="true">◆</span>재물</button>
+        <button type="button" class="cat" data-category="DAILY" aria-pressed="false"><span class="cat-icon" aria-hidden="true">☼</span>오늘의 운세</button>
+      </div>
+
+      <div class="question-box">
+        <label for="question">궁금한 점이 있다면 적어 주세요 <span class="optional">(선택)</span></label>
+        <textarea id="question" rows="3" maxlength="300" placeholder="예: 새로운 일을 시작해도 괜찮을까요?"></textarea>
+        <div class="counter"><span id="count">0</span> / 300</div>
+      </div>
+
+      <button type="button" id="draw" class="primary" disabled>카드 뽑기</button>
+      <p id="setup-msg" class="msg error" role="alert" hidden></p>
+    </section>
+
+    <section id="result" aria-label="타로 결과" hidden>
+      <p id="result-title" class="result-title" hidden></p>
+      <div id="cards" class="cards"></div>
+      <p id="interpretation" class="interpretation" aria-live="polite"></p>
+      <p id="notice" class="msg" role="status" hidden></p>
+      <div class="actions">
+        <button type="button" id="copy" class="secondary" hidden>링크 복사</button>
+        <button type="button" id="again" class="primary" hidden>다시 뽑기</button>
+      </div>
+    </section>
+
+    <footer class="footnote">
+      오락과 자기 성찰을 위한 서비스예요. 의료·법률·투자 같은 중요한 결정은 꼭 전문가와 상의해 주세요.
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

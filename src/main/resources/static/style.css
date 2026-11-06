@@ -1,0 +1,168 @@
+/* 모바일 우선. 외부 폰트·CDN 없이 시스템 폰트만 쓴다. */
+:root {
+  --bg: #12101f;
+  --bg-2: #1c1836;
+  --panel: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.14);
+  --text: #f1edff;
+  --muted: #b3acd0;
+  --accent: #c9a8ff;
+  --accent-2: #f2cf87;
+  --danger: #ff9aa8;
+  --paper: #f5ecd7;
+  --ink: #2a2140;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background: radial-gradient(circle at 50% -10%, var(--bg-2), var(--bg) 60%) fixed;
+  font-family: "Pretendard", system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  line-height: 1.6;
+}
+
+.app {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+[hidden] { display: none !important; }
+
+.hero { text-align: center; margin-bottom: 20px; }
+.hero h1 { margin: 0; font-size: 1.8rem; letter-spacing: 0.04em; color: var(--accent-2); }
+.sub { margin: 6px 0 0; color: var(--muted); font-size: 0.95rem; }
+
+.step { font-size: 1.05rem; margin: 0 0 12px; }
+
+/* 카테고리 */
+.categories { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.cat {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 54px; padding: 10px;
+  color: var(--text); font: inherit; font-weight: 600;
+  background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+  cursor: pointer; transition: background .15s, border-color .15s, transform .1s;
+}
+.cat:hover:not(:disabled) { border-color: var(--accent); }
+.cat:active:not(:disabled) { transform: scale(0.98); }
+.cat:disabled { cursor: not-allowed; opacity: 0.6; }
+.cat[aria-pressed="true"] { background: rgba(201, 168, 255, 0.22); border-color: var(--accent); }
+.cat-icon { color: var(--accent-2); }
+
+/* 질문 */
+.question-box { margin: 18px 0 14px; }
+.question-box label { display: block; margin-bottom: 6px; font-size: 0.95rem; }
+.optional { color: var(--muted); font-size: 0.85rem; }
+textarea {
+  width: 100%; resize: vertical; padding: 12px;
+  color: var(--text); font: inherit; font-size: 16px; /* iOS 확대 방지 */
+  background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+}
+textarea:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+textarea:disabled { opacity: 0.6; }
+.counter { text-align: right; color: var(--muted); font-size: 0.8rem; margin-top: 4px; }
+.counter.full { color: var(--accent-2); }
+
+/* 버튼 */
+button { font: inherit; }
+button.primary, button.secondary {
+  min-height: 50px; padding: 0 22px; border-radius: var(--radius);
+  font-weight: 700; cursor: pointer; transition: opacity .15s, transform .1s;
+}
+button.primary { width: 100%; color: #1c1230; background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: 0; }
+button.secondary { color: var(--text); background: var(--panel); border: 1px solid var(--border); }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+button:active:not(:disabled) { transform: scale(0.98); }
+
+/* 메시지 */
+.msg { margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--panel); color: var(--muted); font-size: 0.92rem; }
+.msg.error { color: var(--danger); }
+
+/* 결과 */
+#result { margin-top: 8px; }
+.result-title { text-align: center; color: var(--accent); font-weight: 600; margin: 0 0 12px; }
+
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; perspective: 900px; }
+.card-slot { text-align: center; min-width: 0; }
+.position { font-size: 0.85rem; color: var(--accent-2); margin-bottom: 6px; font-weight: 600; }
+
+.card { position: relative; aspect-ratio: 2 / 3; }
+.card-inner {
+  position: absolute; inset: 0;
+  transform-style: preserve-3d;
+  transition: transform .8s cubic-bezier(.3, .7, .2, 1);
+}
+.card.flipped .card-inner { transform: rotateY(180deg); }
+
+.face {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+.face.back {
+  font-size: 2rem; color: var(--accent-2);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(242, 207, 135, 0.25) 0 18%, transparent 19%),
+    repeating-linear-gradient(45deg, #3b2d6b 0 8px, #2c2252 8px 16px);
+}
+.face.front {
+  transform: rotateY(180deg);
+  background: var(--paper); color: var(--ink);
+  flex-direction: column; gap: 6px;
+}
+/* 역방향은 카드 그림(기호와 번호)을 180도 돌려서 보여준다. 이름과 방향 글자는 읽을 수 있게 둔다. */
+.art { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.art.reversed { transform: rotate(180deg); }
+.symbol { font-size: 2.2rem; line-height: 1; }
+.number { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.05em; }
+.symbol.major { color: #b8860b; }
+.symbol.WANDS { color: #2e7d32; }
+.symbol.CUPS { color: #1565c0; }
+.symbol.SWORDS { color: #455a64; }
+.symbol.PENTACLES { color: #b8860b; }
+
+.info { margin-top: 8px; opacity: 0; transform: translateY(4px); transition: opacity .5s .5s, transform .5s .5s; }
+.card.flipped + .info { opacity: 1; transform: none; }
+.card-name { font-weight: 700; font-size: 0.92rem; word-break: keep-all; }
+.card-dir { font-size: 0.78rem; color: var(--accent); }
+.card-dir.reversed { color: var(--accent-2); }
+.card-kw { margin-top: 2px; font-size: 0.74rem; color: var(--muted); word-break: keep-all; }
+
+.interpretation {
+  min-height: 3em; margin: 22px 0 0; padding: 16px;
+  white-space: pre-wrap; word-break: keep-all;
+  background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.interpretation:empty { display: none; }
+.interpretation.typing::after { content: "▍"; margin-left: 2px; color: var(--accent); animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.actions { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.actions .secondary { width: 100%; }
+
+.footnote { margin-top: 32px; color: var(--muted); font-size: 0.78rem; text-align: center; }
+
+@media (min-width: 480px) {
+  .app { padding-top: 40px; }
+  .hero h1 { font-size: 2.1rem; }
+  .categories { grid-template-columns: repeat(4, 1fr); }
+  .cards { gap: 16px; }
+  .card-name { font-size: 1rem; }
+  .card-kw { font-size: 0.82rem; }
+  .actions { flex-direction: row; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-inner, .info, .cat { transition: none; }
+  .interpretation.typing::after { animation: none; }
+}

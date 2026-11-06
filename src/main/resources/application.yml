@@ -6,6 +6,10 @@ spring:
       enabled: true
 
 fortune:
+  tarot:
+    reversed-probability: 0.5
+    # 결과 보관 기간. 지나면 조회되지 않는다.
+    retention: 24h
   llm:
     # mock | anthropic  (환경변수 FORTUNE_LLM_PROVIDER 로 전환)
     provider: ${FORTUNE_LLM_PROVIDER:mock}
