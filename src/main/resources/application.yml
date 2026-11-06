@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: fortune
+  threads:
+    virtual:
+      enabled: true
+
+fortune:
+  llm:
+    # mock | anthropic  (환경변수 FORTUNE_LLM_PROVIDER 로 전환)
+    provider: ${FORTUNE_LLM_PROVIDER:mock}
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY:}
+      model: claude-haiku-5-5
+      max-tokens: 1024
+      connect-timeout: 5s
+      request-timeout: 30s
+      stream-timeout: 60s
+    resilience:
+      max-attempts: 3
+      initial-backoff: 300ms
+      multiplier: 2.0
+      max-backoff: 5s
+      jitter-ratio: 0.2
+      fallback-message: 별들이 잠시 흐려졌어요. 잠시 후 다시 시도해 주세요.

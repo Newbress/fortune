@@ -1,0 +1,13 @@
+.gradle/
+build/
+out/
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# secrets
+.env
+.env.*
+application-local.yml
+application-secret.yml
