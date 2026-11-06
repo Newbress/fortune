@@ -14,9 +14,19 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PromptRegistry {
 
     private final Map<String, PromptTemplate> cache = new ConcurrentHashMap<>();
+    private final Map<String, String> fragments = new ConcurrentHashMap<>();
 
     public PromptTemplate get(String name, String version) {
         return cache.computeIfAbsent(name + "-" + version, key -> load(name, version));
+    }
+
+    /**
+     * 템플릿에 끼워 넣는 부가 조각(예: 카테고리별 해석 가이드)을 읽는다.
+     * 파일은 {@code prompts/{name}-{version}.{fragment}.txt} 이고, 템플릿과 같은 버전으로 관리된다.
+     */
+    public String fragment(String name, String version, String fragment) {
+        return fragments.computeIfAbsent(name + "-" + version + "." + fragment,
+                key -> read("prompts/" + key + ".txt"));
     }
 
     private PromptTemplate load(String name, String version) {

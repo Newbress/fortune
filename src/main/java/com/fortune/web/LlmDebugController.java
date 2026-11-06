@@ -4,6 +4,7 @@ import com.fortune.llm.LlmClient;
 import com.fortune.llm.LlmRequest;
 import com.fortune.llm.LlmResponse;
 import com.fortune.prompt.PromptRegistry;
+import com.fortune.prompt.QuestionSanitizer;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -87,7 +88,7 @@ public class LlmDebugController {
 
     private LlmRequest render(ChatRequest body) {
         // 질문을 감싼 태그를 사용자가 닫아서 프롬프트 구조를 깨지 못하게 한다.
-        String question = body.question().replace("<question>", "").replace("</question>", "");
+        String question = QuestionSanitizer.sanitize(body.question());
         return prompts.get("tarot", "v1").render(Map.of("question", question, "cards", body.cards()));
     }
 
