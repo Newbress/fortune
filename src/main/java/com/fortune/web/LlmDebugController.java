@@ -99,11 +99,4 @@ public class LlmDebugController {
             throw new ClientDisconnectedException(e);
         }
     }
-
-    /** 클라이언트가 연결을 끊었을 때 LLM 호출을 중단시키기 위한 예외. LlmException이 아니므로 재시도되지 않는다. */
-    private static final class ClientDisconnectedException extends RuntimeException {
-        ClientDisconnectedException(Throwable cause) {
-            super(cause);
-        }
-    }
 }
