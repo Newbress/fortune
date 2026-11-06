@@ -94,7 +94,7 @@ class CardDeckTest {
 
     @Test
     void 수트별_장수가_14장이_아니면_실패한다() {
-        // 완즈 한 장을 컵으로 바꾸되 번호는 겹치지 않게 한다 (완즈 13장, 컵 15장).
+        // 완드 한 장을 컵으로 바꾸되 번호는 겹치지 않게 한다 (완드 13장, 컵 15장).
         // 번호 범위(1~14) 안에서는 같은 수트에 번호가 겹치므로, 슬롯 중복 검사가 먼저 잡는다.
         for (JsonNode node : cards) {
             if ("WANDS".equals(node.path("suit").asText())) {

@@ -2,7 +2,7 @@ package com.fortune.tarot;
 
 /** 마이너 아르카나의 수트. */
 public enum Suit {
-    WANDS("완즈"),
+    WANDS("완드"),
     CUPS("컵"),
     SWORDS("소드"),
     PENTACLES("펜타클");
